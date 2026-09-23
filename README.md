@@ -1269,3 +1269,13 @@ ARM64 handheld input support, launcher, controller calibration, and handheld int
 ARM64携帯ゲーム機向け入力対応、ランチャー、コントローラー設定ツール、および携帯ゲーム機向け統合。
 
 このソフトウェアはAIを使用して作成されています。
+
+
+---
+
+## Support / サポートについて
+
+This is a personal hobby project. Issues and reports are welcome, but responses may be delayed as this repository is not monitored regularly.
+
+これは個人の趣味で開発・公開しているプロジェクトです。  
+Issueや不具合報告は歓迎しますが、GitHubを常時確認しているわけではないため、返信や対応には時間がかかる場合があります。
