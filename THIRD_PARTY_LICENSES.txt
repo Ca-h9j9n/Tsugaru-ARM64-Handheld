@@ -1,0 +1,83 @@
+# Third-Party Software Notices
+
+This distribution contains a modified ARM64 build of Tsugaru,
+the FM TOWNS / Marty emulator developed by CaptainYS
+(Soji Yamakawa).
+
+Original Tsugaru project:
+https://github.com/captainys/TOWNSEMU
+
+Tsugaru is distributed under the 3-clause BSD License.
+See LICENSE_Tsugaru.txt included with this distribution.
+
+## Tsugaru / CaptainYS Components
+
+The Tsugaru ARM64 binary is built from the original Tsugaru
+source tree together with supporting source libraries from the
+CaptainYS development environment.
+
+Components used by the build include:
+
+* YsSimpleSound
+  Copyright (c) 2015 Soji Yamakawa.
+  All rights reserved.
+
+* YsPNG
+  Copyright (c) 2017 Soji Yamakawa.
+  All rights reserved.
+
+* D77
+  Copyright 2020 Soji Yamakawa
+  (CaptainYS, http://www.ysflight.com)
+
+* YsSocket
+  Supporting library from the CaptainYS source environment.
+
+These components originate from source code used by the
+Tsugaru project and/or the CaptainYS public source libraries.
+
+CaptainYS public source repository:
+https://github.com/captainys/public
+
+For the copyright notice, redistribution conditions, and
+disclaimer applicable to the original Tsugaru source included
+in this distribution, see LICENSE_Tsugaru.txt.
+
+## System Libraries
+
+The ARM64 binary dynamically uses system libraries including:
+
+* libasound.so.2
+* libstdc++.so.6
+* libm.so.6
+* libgcc_s.so.1
+* libc.so.6
+
+These system libraries are not included in this distribution.
+They are provided by the target operating system.
+
+## Modification Notice
+
+This is an unofficial modified ARM64 build of Tsugaru.
+
+The modifications and additional files in this distribution
+provide controller/input support and launcher integration
+intended for ARM64 handheld Linux systems, including
+configuration through input.cfg.
+
+The modified build has been tested on:
+
+* Powkiddy V90S running KNULLI
+* TRIMUI Brick running KNULLI
+
+This distribution is not an official release by CaptainYS.
+
+The original Tsugaru project and its original source code
+remain the work of CaptainYS (Soji Yamakawa).
+
+The modifications and additional files created specifically
+for the Tsugaru ARM64 Handheld package are covered separately
+by LICENSE_Modifications.txt.
+
+FM TOWNS BIOS/ROM files and commercial game software are not
+included in this distribution.
