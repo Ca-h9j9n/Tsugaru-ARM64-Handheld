@@ -76,6 +76,8 @@ Do not assume that replacing these two files in an arbitrary newer TOWNSEMU sour
 
 The exact upstream Git commit corresponding to the ZIP archive has not been independently verified.
 
+For source compatibility, use `TOWNSEMU-20250513.zip` as the development baseline rather than assuming compatibility with the latest upstream source.
+
 See the included license and notice files for applicable terms.
 
 ---
