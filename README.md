@@ -616,6 +616,16 @@ These libraries are not included in this package and must be provided by the tar
 
 ## Building from Source
 
+**Source Version Compatibility Notice**
+
+This ARM64 handheld port was developed using the original Tsugaru source archive **`TOWNSEMU-20250513.zip`** (May 13, 2025 release).
+
+**The modified source files are not guaranteed to be compatible with newer versions of TOWNSEMU, including the current upstream release.**
+
+The original May 2025 source does not include the ARM64 handheld-specific `Tsugaru_CUI_V90S` build target. Additional handheld-specific source files and build configuration are required.
+
+See [BUILD_ARM64.md](BUILD_ARM64.md) for build information and limitations.
+
 Build instructions for the ARM64 version are provided in:
 
 **[BUILD_ARM64.md](BUILD_ARM64.md)**
