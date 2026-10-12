@@ -4,6 +4,9 @@ TSUGARU="/userdata/system/tsugaru/Tsugaru_CUI_V90S"
 BIOS="/userdata/bios/fmtowns"
 CMOS="/userdata/system/tsugaru/cmos.dat"
 TSU_FILE="$1"
+if [ -n "$TSU_FILE" ] && [ -f "$TSU_FILE" ]; then
+    TSU_FILE="$(cd "$(dirname "$TSU_FILE")" && pwd -P)/$(basename "$TSU_FILE")"
+fi
 LOG="/userdata/system/tsugaru/launch_fmtowns.log"
 
 CMD_FIFO="/tmp/tsugaru_cmd"

@@ -1,0 +1,33 @@
+--- a/src/main_cui/CMakeLists.txt
++++ b/src/main_cui/CMakeLists.txt
+@@ -1465,3 +1465,30 @@
+ 		0023:00001BDC
+ 		-DAMPERWIRELINE
+ )
++
++# ------------------------------------------------------------
++# ARM64 Handheld / V90S
++# ------------------------------------------------------------
++
++add_executable(Tsugaru_CUI_V90S
++    main_v90s.cpp
++    headless_connection.cpp
++    v90s_connection.cpp
++)
++
++target_link_libraries(Tsugaru_CUI_V90S
++    towns
++    townscommand
++    townsargv
++    townsrender
++    outside_world
++)
++
++if(UNIX)
++    target_link_libraries(Tsugaru_CUI_V90S
++        pthread
++        dl
++        yssimplesound
++        yssimplesound_linux_alsa
++    )
++endif()

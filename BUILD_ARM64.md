@@ -58,11 +58,16 @@ The ARM64 handheld modifications are provided separately in this repository:
 
 ```text
 modified_source/main_cui/
+├── main_v90s.cpp
+├── headless_connection.cpp
+├── headless_connection.h
 ├── v90s_connection.cpp
 └── v90s_connection.h
 ```
 
-These two files contain the handheld-specific controller input modifications. The `Tsugaru_CUI_V90S` build target and its supporting source files belong to the corresponding ARM64 handheld development tree.
+The additional build configuration is provided as `modified_source/v90s_cmake.patch`.
+
+The reproducible build requires five handheld source files and the supplied CMake patch, as listed below.
 
 ### Compatibility Warning
 
@@ -70,15 +75,38 @@ The supplied modified source files were developed for the source tree based on `
 
 **Compatibility with the current upstream TOWNSEMU source or later releases is not guaranteed.**
 
-For the intended build procedure, start with the original source archive listed above, retain the ARM64 handheld-specific supporting files and build configuration, and replace the corresponding `v90s_connection.cpp` and `v90s_connection.h` files with the versions provided in this repository.
+For the intended build procedure, start with `TOWNSEMU-20250513.zip`, copy the five supplied source files into `src/main_cui/`, and apply `modified_source/v90s_cmake.patch` to the original CMake configuration.
 
-Do not assume that replacing these two files in an arbitrary newer TOWNSEMU source tree will produce a working build.
+Do not assume that applying the five supplied source files and CMake patch to an arbitrary newer TOWNSEMU source tree will produce a working build.
 
-The exact upstream Git commit corresponding to the ZIP archive has not been independently verified.
+The ZIP source was verified against upstream Git tag `v20250513` (commit `c1a860b625c1b873fcfcafc8d8c3f5548332e4e1`).
 
 For source compatibility, use `TOWNSEMU-20250513.zip` as the development baseline rather than assuming compatibility with the latest upstream source.
 
 See the included license and notice files for applicable terms.
+
+---
+
+### Reproducible ARM64 Build (October 2026)
+
+The original `TOWNSEMU-20250513.zip` source was compared
+with upstream Git tag `v20250513`, commit
+`c1a860b625c1b873fcfcafc8d8c3f5548332e4e1`.
+
+The reproducible build requires these six additions:
+
+- `modified_source/main_cui/main_v90s.cpp`
+- `modified_source/main_cui/headless_connection.cpp`
+- `modified_source/main_cui/headless_connection.h`
+- `modified_source/main_cui/v90s_connection.cpp`
+- `modified_source/main_cui/v90s_connection.h`
+- `modified_source/v90s_cmake.patch`
+
+The five source files and CMake patch were verified
+to compile successfully for AArch64 Linux.
+
+The newly rebuilt executable has not yet been
+tested on handheld hardware.
 
 ---
 
@@ -122,37 +150,37 @@ If `input.cfg` is unavailable, the original V90S device path is used:
 
 ## 4. Apply the Modified Source Files
 
-Obtain the original Tsugaru / TOWNSEMU source tree.
-
-Replace the corresponding files in the source tree with the versions supplied by this project.
-
-Copy:
+Extract `TOWNSEMU-20250513.zip` and place the source
+directory alongside `modified_source/` as follows:
 
 ```text
-modified_source/main_cui/v90s_connection.cpp
+work/
+├── TOWNSEMU-20250513/
+└── modified_source/
 ```
 
-to:
+Copy `modified_source/` from the downloaded
+Tsugaru ARM64 Handheld repository into `work/`.
 
-```text
-TOWNSEMU/main_cui/v90s_connection.cpp
+Run the following copy command from `work/`.
+
+Copy all five supplied source files into `TOWNSEMU-20250513/src/main_cui/`.
+
+```bash
+cp modified_source/main_cui/* TOWNSEMU-20250513/src/main_cui/
 ```
 
-and copy:
 
-```text
-modified_source/main_cui/v90s_connection.h
+
+### Apply the CMake Patch
+
+From the `TOWNSEMU-20250513` directory, run:
+
+```bash
+patch -p1 < ../modified_source/v90s_cmake.patch
 ```
 
-to:
-
-```text
-TOWNSEMU/main_cui/v90s_connection.h
-```
-
-It is recommended that the original files be backed up before replacement.
-
-The supplied modified files were tested with the source tree used for this release. They should not be assumed to be compatible with every future upstream version without checking the differences first.
+This adds the `Tsugaru_CUI_V90S` target to `src/main_cui/CMakeLists.txt`.
 
 ---
 
@@ -224,17 +252,35 @@ This is the toolchain configuration used by the tested build.
 
 ## 7. Configure the Build
 
-Assuming the Tsugaru source directory is named:
+### Reproduced ARM64 Build (October 2026)
 
-```text
-src
-```
-
-and `toolchain-aarch64.cmake` is in the directory above it, create a separate build directory:
+From the `work/` directory, configure with:
 
 ```bash
-mkdir -p build-arm64
-cd build-arm64
+cmake -S TOWNSEMU-20250513/src -B build-arm64 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc \
+  -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ \
+  -DCMAKE_SYSTEM_NAME=Linux \
+  -DCMAKE_SYSTEM_PROCESSOR=aarch64
+```
+
+
+### Alternative: Original Ninja Build Procedure
+
+Note: This alternative Ninja procedure was not re-tested during
+the October 2026 reproducibility verification. The verified
+procedure uses Unix Makefiles, as documented above.
+
+
+The following procedure documents the earlier Ninja-based build.
+Use a separate build directory and do not mix CMake generators.
+
+From the `work/` directory, with `TOWNSEMU-20250513/` and `toolchain-aarch64.cmake` available, create a separate Ninja build directory:
+
+```bash
+mkdir -p build-arm64-ninja
+cd build-arm64-ninja
 ```
 
 Configure with CMake:
@@ -244,7 +290,7 @@ cmake -G Ninja \
   -DCMAKE_TOOLCHAIN_FILE=../toolchain-aarch64.cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DALSALIB=/usr/lib/aarch64-linux-gnu/libasound.so \
-  ../src
+  ../TOWNSEMU-20250513/src
 ```
 
 The tested configuration used:
@@ -259,6 +305,25 @@ If the source directory or ARM64 ALSA library is installed in a different locati
 ---
 
 ## 8. Build Tsugaru_CUI_V90S
+
+### Reproduced ARM64 Build
+
+From the `work/` directory, run:
+
+```bash
+cmake --build build-arm64 --target Tsugaru_CUI_V90S -j4
+```
+
+The resulting executable is located at:
+
+```text
+build-arm64/main_cui/Tsugaru_CUI_V90S
+```
+
+
+### Alternative: Ninja Build
+
+For a build directory configured with Ninja, run:
 
 Build the handheld CUI target:
 
@@ -287,7 +352,7 @@ main_cui/Tsugaru_CUI_V90S
 Check the generated executable:
 
 ```bash
-file main_cui/Tsugaru_CUI_V90S
+file build-arm64/main_cui/Tsugaru_CUI_V90S
 ```
 
 The tested release reports an executable similar to:
@@ -308,7 +373,7 @@ Use the AArch64 `readelf` tool instead:
 
 ```bash
 aarch64-linux-gnu-readelf -d \
-  main_cui/Tsugaru_CUI_V90S | grep NEEDED
+  build-arm64/main_cui/Tsugaru_CUI_V90S | grep NEEDED
 ```
 
 The tested binary requires:
@@ -328,6 +393,19 @@ They are not bundled with the Tsugaru ARM64 Handheld package.
 ---
 
 ## 10. Install the Executable
+
+Important: The October 2026 rebuilt executable has been verified
+as an ARM64 binary, but has not yet been tested on actual handheld
+hardware. Back up the currently working executable before replacing it.
+
+
+Before installing the rebuilt executable, run the following on
+the handheld to preserve the currently working version:
+
+```bash
+cp -pn /userdata/system/tsugaru/Tsugaru_CUI_V90S \
+  /userdata/system/tsugaru/Tsugaru_CUI_V90S.backup
+```
 
 On the handheld, the expected Tsugaru directory is:
 
@@ -374,6 +452,12 @@ Copy it to:
 
 ```text
 /userdata/roms/ports/input_test_v9.sh
+```
+
+Before running it, make the script executable:
+
+```bash
+chmod +x /userdata/roms/ports/input_test_v9.sh
 ```
 
 Run `input_test_v9.sh` from the **PORTS** menu in KNULLI.
@@ -425,6 +509,12 @@ DPAD_Y_REVERSE=0
 The actual values depend on the controller and device.
 
 Do not copy example button codes blindly. Use `input_test_v9.sh` to generate the configuration for the target device.
+
+The `launch_fmtowns.sh` launcher reads the generated `input.cfg`
+and uses its controller settings when starting Tsugaru.
+The supplied `v90s_connection.cpp` and `v90s_connection.h`
+implement the corresponding configurable input handling.
+
 
 ---
 
@@ -484,6 +574,15 @@ Example:
 ├── disc1.cue
 └── disc1.bin
 ```
+
+For the example above, `GameName.tsu` contains one line:
+
+```text
+-CD "disc1.cue"
+```
+
+Media filenames are resolved relative to the game directory.
+Use double quotes around filenames, especially when they contain spaces.
 
 BIOS files, games, copyrighted software, and game media are not included with this project.
 
@@ -556,6 +655,14 @@ The file is created as required and is not included in the distribution package.
 
 ## 19. Tested Hardware
 
+The hardware test results below apply to the previously released
+Tsugaru ARM64 Handheld package.
+
+The executable reproduced from the May 2025 upstream source in
+October 2026 has passed cross-compilation and binary verification,
+but has not yet been tested on these handheld devices.
+
+
 ### Powkiddy V90S
 
 Tested with KNULLI.
@@ -614,12 +721,23 @@ Controllers using analog axes with ranges such as `0..255` or `0..65535`, differ
 
 ## 21. Source Changes Included in This Project
 
-Comparison between the original development source tree and the final generic-input development tree identified the functional ARM64 handheld changes in:
+The reproducible ARM64 build uses five supplied source files:
 
 ```text
-main_cui/v90s_connection.cpp
-main_cui/v90s_connection.h
+modified_source/main_cui/main_v90s.cpp
+modified_source/main_cui/headless_connection.cpp
+modified_source/main_cui/headless_connection.h
+modified_source/main_cui/v90s_connection.cpp
+modified_source/main_cui/v90s_connection.h
 ```
+
+It also requires the CMake configuration patch:
+
+```text
+modified_source/v90s_cmake.patch
+```
+
+These files are applied to the verified May 2025 upstream source tree.
 
 A development version of:
 
