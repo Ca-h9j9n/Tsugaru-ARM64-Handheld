@@ -41,40 +41,42 @@ as its dynamic loader.
 
 ---
 
-## 2. Original Tsugaru Source
+## 2. Original Tsugaru Source and Compatibility
 
-The original Tsugaru / TOWNSEMU project is developed by:
-
-**CaptainYS (Soji Yamakawa)**
+The original Tsugaru / TOWNSEMU project is developed by **CaptainYS (Soji Yamakawa)**.
 
 Original project:
-
 https://github.com/captainys/TOWNSEMU
 
-This package does not duplicate the complete original Tsugaru source tree.
+### Tested Source Version
 
-Only the source files modified for the ARM64 handheld input implementation are included under:
+This project was developed and tested using the following original source archive:
 
-```text
-modified_source/
-└── main_cui/
-    ├── v90s_connection.cpp
-    └── v90s_connection.h
-```
+**`TOWNSEMU-20250513.zip`**
 
-The exact upstream Git commit used for the original development tree was not recorded.
-
-The modified files included with this release correspond to the Tsugaru source tree that was used to build and test this release.
-
-Because the upstream project may change over time, compatibility with future versions of the original Tsugaru source tree is not guaranteed.
-
-See the included license and notice files:
+The ARM64 handheld modifications are provided separately in this repository:
 
 ```text
-LICENSE_Tsugaru.txt
-LICENSE_Modifications.txt
-THIRD_PARTY_LICENSES.txt
+modified_source/main_cui/
+├── v90s_connection.cpp
+└── v90s_connection.h
 ```
+
+These two files contain the handheld-specific controller input modifications. The `Tsugaru_CUI_V90S` build target and its supporting source files belong to the corresponding ARM64 handheld development tree.
+
+### Compatibility Warning
+
+The supplied modified source files were developed for the source tree based on `TOWNSEMU-20250513.zip`.
+
+**Compatibility with the current upstream TOWNSEMU source or later releases is not guaranteed.**
+
+For the intended build procedure, start with the original source archive listed above, retain the ARM64 handheld-specific supporting files and build configuration, and replace the corresponding `v90s_connection.cpp` and `v90s_connection.h` files with the versions provided in this repository.
+
+Do not assume that replacing these two files in an arbitrary newer TOWNSEMU source tree will produce a working build.
+
+The exact upstream Git commit corresponding to the ZIP archive has not been independently verified.
+
+See the included license and notice files for applicable terms.
 
 ---
 
