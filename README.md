@@ -72,6 +72,8 @@ Tsugaru-ARM64-Handheld/
 │
 └── modified_source/
     ├── v90s_cmake.patch
+    ├── cpputil/
+    │   └── cpputil.h
     └── main_cui/
         ├── main_v90s.cpp
         ├── headless_connection.cpp
@@ -838,6 +840,8 @@ Tsugaru-ARM64-Handheld/
 │
 └── modified_source/
     ├── v90s_cmake.patch
+    ├── cpputil/
+    │   └── cpputil.h
     └── main_cui/
         ├── main_v90s.cpp
         ├── headless_connection.cpp

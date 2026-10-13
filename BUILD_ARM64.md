@@ -67,7 +67,7 @@ modified_source/main_cui/
 
 The additional build configuration is provided as `modified_source/v90s_cmake.patch`.
 
-The reproducible build requires five handheld source files and the supplied CMake patch, as listed below.
+The reproducible build requires six source files and the supplied CMake patch, as listed below.
 
 ### Compatibility Warning
 
@@ -75,9 +75,9 @@ The supplied modified source files were developed for the source tree based on `
 
 **Compatibility with the current upstream TOWNSEMU source or later releases is not guaranteed.**
 
-For the intended build procedure, start with `TOWNSEMU-20250513.zip`, copy the five supplied source files into `src/main_cui/`, and apply `modified_source/v90s_cmake.patch` to the original CMake configuration.
+For the intended build procedure, start with `TOWNSEMU-20250513.zip`, copy the five handheld source files into `src/main_cui/`, replace `src/cpputil/cpputil.h` with the supplied version, and apply `modified_source/v90s_cmake.patch` to the original CMake configuration.
 
-Do not assume that applying the five supplied source files and CMake patch to an arbitrary newer TOWNSEMU source tree will produce a working build.
+Do not assume that applying the six supplied source files and CMake patch to an arbitrary newer TOWNSEMU source tree will produce a working build.
 
 The ZIP source was verified against upstream Git tag `v20250513` (commit `c1a860b625c1b873fcfcafc8d8c3f5548332e4e1`).
 
@@ -93,17 +93,20 @@ The original `TOWNSEMU-20250513.zip` source was compared
 with upstream Git tag `v20250513`, commit
 `c1a860b625c1b873fcfcafc8d8c3f5548332e4e1`.
 
-The reproducible build requires these six additions:
+The reproducible build requires these seven additions:
 
 - `modified_source/main_cui/main_v90s.cpp`
 - `modified_source/main_cui/headless_connection.cpp`
 - `modified_source/main_cui/headless_connection.h`
 - `modified_source/main_cui/v90s_connection.cpp`
 - `modified_source/main_cui/v90s_connection.h`
+- `modified_source/cpputil/cpputil.h`
 - `modified_source/v90s_cmake.patch`
 
-The five source files and CMake patch were verified
+The five handheld source files and CMake patch were verified
 to compile successfully for AArch64 Linux.
+The supplied cpputil.h contains the signed-byte handling fix
+verified during V90S hardware testing.
 
 The newly rebuilt executable has not yet been
 tested on handheld hardware.
@@ -164,10 +167,16 @@ Tsugaru ARM64 Handheld repository into `work/`.
 
 Run the following copy command from `work/`.
 
-Copy all five supplied source files into `TOWNSEMU-20250513/src/main_cui/`.
+Copy the five handheld source files into `TOWNSEMU-20250513/src/main_cui/`.
 
 ```bash
 cp modified_source/main_cui/* TOWNSEMU-20250513/src/main_cui/
+```
+
+Apply the V90S-tested `cpputil.h` to fix ARM64 signed-byte handling:
+
+```bash
+cp modified_source/cpputil/cpputil.h TOWNSEMU-20250513/src/cpputil/cpputil.h
 ```
 
 
@@ -721,7 +730,7 @@ Controllers using analog axes with ranges such as `0..255` or `0..65535`, differ
 
 ## 21. Source Changes Included in This Project
 
-The reproducible ARM64 build uses five supplied source files:
+The reproducible ARM64 build uses six supplied source files:
 
 ```text
 modified_source/main_cui/main_v90s.cpp
@@ -729,6 +738,7 @@ modified_source/main_cui/headless_connection.cpp
 modified_source/main_cui/headless_connection.h
 modified_source/main_cui/v90s_connection.cpp
 modified_source/main_cui/v90s_connection.h
+modified_source/cpputil/cpputil.h
 ```
 
 It also requires the CMake configuration patch:
