@@ -71,7 +71,11 @@ Tsugaru-ARM64-Handheld/
 │   └── es_systems_v90s.cfg
 │
 └── modified_source/
+    ├── v90s_cmake.patch
     └── main_cui/
+        ├── main_v90s.cpp
+        ├── headless_connection.cpp
+        ├── headless_connection.h
         ├── v90s_connection.cpp
         └── v90s_connection.h
 ```
@@ -622,7 +626,11 @@ This ARM64 handheld port was developed using the original Tsugaru source archive
 
 **The modified source files are not guaranteed to be compatible with newer versions of TOWNSEMU, including the current upstream release.**
 
-The original May 2025 source does not include the ARM64 handheld-specific `Tsugaru_CUI_V90S` build target. Additional handheld-specific source files and build configuration are required.
+The original May 2025 source does not include the ARM64 handheld-specific `Tsugaru_CUI_V90S` build target.
+
+This repository now includes the required modified source files and CMake patch. A reproducible AArch64 cross-build has been verified using the original `TOWNSEMU-20250513.zip` source archive.
+
+The newly rebuilt executable has not yet been verified on actual ARM64 handheld hardware.
 
 See [BUILD_ARM64.md](BUILD_ARM64.md) for build information and limitations.
 
@@ -633,9 +641,14 @@ Build instructions for the ARM64 version are provided in:
 The repository includes only the Tsugaru source files modified for the ARM64 handheld input implementation under:
 
 ```text
-modified_source/main_cui/
-├── v90s_connection.cpp
-└── v90s_connection.h
+modified_source/
+├── v90s_cmake.patch
+└── main_cui/
+    ├── main_v90s.cpp
+    ├── headless_connection.cpp
+    ├── headless_connection.h
+    ├── v90s_connection.cpp
+    └── v90s_connection.h
 ```
 
 The complete original Tsugaru source tree is not duplicated in this repository.
@@ -692,6 +705,12 @@ Original project:
 https://github.com/captainys/TOWNSEMU
 
 The original Tsugaru project is distributed under the **BSD 3-Clause License**.
+
+The original author, Soji Yamakawa (CaptainYS), has confirmed that YsSimpleSound and YsSocket are also licensed under the BSD 3-Clause License.
+
+He has also confirmed that modified Tsugaru Libretro core binaries for Linux x86_64, Linux ARM64, Android ARM64, and Windows x86_64 may be distributed, and that the standalone Linux ARM64 CUI port may continue to be distributed and updated, subject to the applicable licenses.
+
+Existing copyright notices and applicable license conditions must be preserved.
 
 See:
 
@@ -818,7 +837,11 @@ Tsugaru-ARM64-Handheld/
 │   └── es_systems_v90s.cfg
 │
 └── modified_source/
+    ├── v90s_cmake.patch
     └── main_cui/
+        ├── main_v90s.cpp
+        ├── headless_connection.cpp
+        ├── headless_connection.h
         ├── v90s_connection.cpp
         └── v90s_connection.h
 ```
@@ -1167,14 +1190,23 @@ libc.so.6
 GitHubリポジトリには、ARM64携帯ゲーム機対応のため変更したTsugaruソース：
 
 ```text
-modified_source/main_cui/
-├── v90s_connection.cpp
-└── v90s_connection.h
+modified_source/
+├── v90s_cmake.patch
+└── main_cui/
+    ├── main_v90s.cpp
+    ├── headless_connection.cpp
+    ├── headless_connection.h
+    ├── v90s_connection.cpp
+    └── v90s_connection.h
 ```
 
 を収録しています。
 
 オリジナルTsugaruの完全なソースツリーは、このリポジトリには複製していません。
+
+本リポジトリには、再現ビルドに必要な変更ソース5ファイルとCMakeパッチを収録しています。
+
+オリジナルの `TOWNSEMU-20250513.zip` を使用したAArch64クロスビルドが成功しています。ただし、新たにビルドした実行ファイルのARM64実機動作は未検証です。
 
 オリジナルTsugaruソースを取得し、`BUILD_ARM64.md` の手順に従って変更ファイルを適用してARM64版をビルドしてください。
 
@@ -1217,6 +1249,12 @@ Tsugaruの原作者は **CaptainYS（Soji Yamakawa）氏**です。
 https://github.com/captainys/TOWNSEMU
 
 オリジナルのTsugaruプロジェクトは **BSD 3-Clause License** で公開されています。
+
+原作者のSoji Yamakawa（CaptainYS）氏から、YsSimpleSoundとYsSocketもBSD 3-Clauseライセンスであることを確認いただきました。
+
+また、Linux x86_64、Linux ARM64、Android ARM64、Windows x86_64向けの改変版Tsugaru Libretroコアのバイナリ配布、およびスタンドアロン版Linux ARM64 CUIの継続配布・更新についても、適用されるライセンスに従うことを条件に認められています。
+
+既存の著作権表示と適用されるライセンス条件は維持します。
 
 以下を参照してください。
 
@@ -1287,5 +1325,5 @@ ARM64携帯ゲーム機向け入力対応、ランチャー、コントローラ
 
 This is a personal hobby project. Issues and reports are welcome, but responses may be delayed as this repository is not monitored regularly.
 
-これは個人の趣味で開発・公開しているプロジェクトです。  
+これは個人の趣味で開発・公開しているプロジェクトです。
 Issueや不具合報告は歓迎しますが、GitHubを常時確認しているわけではないため、返信や対応には時間がかかる場合があります。
