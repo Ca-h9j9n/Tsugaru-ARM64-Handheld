@@ -12,6 +12,33 @@ https://github.com/captainys/TOWNSEMU
 
 ---
 
+## v1.1.1 Release Notes
+
+Released: October 14, 2026
+
+This maintenance release includes a rebuilt ARM64 executable
+with the signed-byte handling fix in `cpputil/cpputil.h`.
+
+### Changes
+
+- Fixed ARM64 signed-byte handling in `GetSignedByte`.
+- Rebuilt the AArch64 executable from the corrected source.
+- Verified successful operation on Powkiddy V90S with KNULLI.
+- Confirmed screen display, game startup, controller input,
+  and SELECT + START shutdown.
+
+The previous v1.1 release and its supplementary source-fix
+archive remain available.
+
+### Verified Binary
+
+File: `bin/Tsugaru_CUI_V90S`
+
+SHA256:
+`bde8bdb687926a4b280116fee588ccc2fa7bb605924b51fdde19ed4ea3b939d0`
+
+---
+
 # English
 
 ## Overview
