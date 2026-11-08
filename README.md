@@ -12,6 +12,52 @@ https://github.com/captainys/TOWNSEMU
 
 ---
 
+## v1.2 Release Notes
+
+Released: November 7, 2026
+
+This release adds CHD CD-ROM image support to the ARM64 handheld build of Tsugaru.
+
+### Changes
+
+- Added support for CHD CD-ROM images.
+- Verified booting games from CHD images on Powkiddy V90S with KNULLI.
+- Verified CD switching between CUE and CHD images.
+- Verified CHD CD-DA audio playback.
+- Documented the `-MEMSIZE` option.
+- Updated the English and Japanese documentation and organized third-party licenses.
+
+### Download
+
+Download the v1.2 release package from:
+
+https://github.com/Ca-h9j9n/Tsugaru-ARM64-Handheld/releases/tag/v1.2
+
+---
+
+## v1.2 リリース情報
+
+公開日：2026年11月7日
+
+ARM64携帯ゲーム機向けTsugaruに、CHD形式のCD-ROMイメージ対応を追加しました。
+
+### 主な変更点
+
+- CHD形式のCD-ROMイメージに対応しました。
+- Powkiddy V90S（KNULLI）でCHDイメージからのゲーム起動を確認しました。
+- CUE形式とCHD形式のCD交換動作を確認しました。
+- CHD形式でのCD-DA音声再生を確認しました。
+- `-MEMSIZE` オプションの説明を追加しました。
+- 英語・日本語ドキュメントと第三者ライセンスの構成を整理しました。
+
+### ダウンロード
+
+v1.2の配布ファイルはこちらです。
+
+https://github.com/Ca-h9j9n/Tsugaru-ARM64-Handheld/releases/tag/v1.2
+
+---
+
 ## v1.1.1 Release Notes
 
 Released: October 14, 2026
